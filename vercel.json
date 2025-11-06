@@ -1,33 +1,15 @@
 {
-  "version": 2,
-  "buildCommand": "cd client && npm install && npm run build",
+  "buildCommand": "cd client && npm run build",
   "outputDirectory": "client/build",
-  "installCommand": "cd client && npm install && cd ../server && npm install",
-  "functions": {
-    "api/index.js": {
-      "runtime": "@vercel/node@3"
+  "framework": "create-react-app",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
-    },
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|json|woff|woff2|ttf|eot)$)",
-      "dest": "/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production",
-    "MONGODB_URI": "mongodb+srv://demo:demo@cluster.mongodb.net/ecommerce?retryWrites=true&w=majority"
-  }
+  ]
 }
