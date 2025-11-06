@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="45" fill="url(#gradient)" stroke="url(#strokeGrad)" stroke-width="3"/>
+  <circle cx="50" cy="50" r="35" fill="url(#innerGrad)" opacity="0.8"/>
+  <path d="M50 15 L70 35 L50 55 L30 35 Z" fill="url(#centerGrad)" stroke="rgba(255,215,0,0.8)" stroke-width="2"/>
+  <path d="M35 40l15 12 15-12" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M35 50l15 12 15-12" stroke="rgba(255,255,255,0.8)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M50 10 L53 18 L61 18 L55.5 23 L57.5 31 L50 26 L42.5 31 L44.5 23 L39 18 L47 18 Z" fill="#FFD700" stroke="white" stroke-width="1"/>
+  <text x="50" y="85" text-anchor="middle" fill="#FFD700" font-family="Arial, sans-serif" font-size="12" font-weight="bold">GRAB IT</text>
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="50%" stop-color="#16213e"/>
+      <stop offset="100%" stop-color="#0f3460"/>
+    </linearGradient>
+    <linearGradient id="innerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="50%" stop-color="#FF8C00"/>
+      <stop offset="100%" stop-color="#FF4500"/>
+    </linearGradient>
+    <linearGradient id="centerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.9)"/>
+      <stop offset="50%" stop-color="rgba(255,215,0,0.8)"/>
+      <stop offset="100%" stop-color="rgba(255,140,0,0.6)"/>
+    </linearGradient>
+    <linearGradient id="strokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,215,0,0.6)"/>
+      <stop offset="100%" stop-color="rgba(255,140,0,0.8)"/>
+    </linearGradient>
+  </defs>
+</svg>
