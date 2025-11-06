@@ -1,6 +1,6 @@
-# Grab It - Quick & Easy Shopping Platform
+# 🛒 MERN E-Commerce Platform
 
-A full-stack shopping application demonstrating the complete workflow from adding items to cart to placing orders.
+A comprehensive, full-featured e-commerce application built with the MERN (MongoDB, Express.js, React.js, Node.js) stack. This platform demonstrates a complete online shopping experience from product browsing to order completion.
 
 ## Features
 
