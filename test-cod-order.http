@@ -1,0 +1,28 @@
+# Test Cash on Delivery (COD) Order Creation
+
+POST http://localhost:5000/api/orders
+Content-Type: application/json
+
+{
+  "userId": "64f8b3a123456789abcdef01",
+  "orderItems": [
+    {
+      "product": "689c50425b6fc8e71064c768",
+      "name": "MacBook Pro M3",
+      "quantity": 1,
+      "price": 89999
+    }
+  ],
+  "shippingAddress": {
+    "fullName": "John Doe",
+    "address": "123 Main Street, Sector 15",
+    "city": "Delhi",
+    "postalCode": "110001",
+    "country": "India"
+  },
+  "paymentMethod": "Cash on Delivery",
+  "itemsPrice": 89999,
+  "taxPrice": 16199.82,
+  "shippingPrice": 100,
+  "totalPrice": 106298.82
+}

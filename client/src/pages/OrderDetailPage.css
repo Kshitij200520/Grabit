@@ -1,0 +1,21 @@
+.order-detail-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .order-detail-page {
+    padding: 10px 0;
+  }
+  
+  .container {
+    padding: 0 10px;
+  }
+}
