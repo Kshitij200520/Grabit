@@ -1,7 +1,12 @@
 {
-  "short_name": "E-Shop",
-  "name": "E-Shop - Cart & Order Management",
+  "short_name": "Grab It",
+  "name": "Grab It - Quick & Easy Shopping",
   "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
@@ -10,6 +15,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#667eea",
+  "background_color": "#f5f5f5"
 }
