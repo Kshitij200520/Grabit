@@ -34,7 +34,7 @@ export const productAPI = {
 export const cartAPI = {
   getCart: () => api.get('/cart'),
   addToCart: (data) => api.post('/cart/add', data),
-  updateQuantity: (data) => api.put('/cart/update', data),
+  updateQuantity: (productId, data) => api.put(`/cart/update/${productId}`, data),
   removeItem: (productId) => api.delete(`/cart/remove/${productId}`),
   clearCart: () => api.delete('/cart/clear'),
 };

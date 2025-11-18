@@ -41,14 +41,13 @@ const Cart = () => {
     }
 
     try {
-      const response = await cartAPI.updateQuantity({
-        productId,
+      const response = await cartAPI.updateQuantity(productId, {
         quantity: newQuantity
       });
       
       dispatch({
         type: 'SET_CART',
-        payload: response.data
+        payload: response.data.cart || response.data
       });
     } catch (error) {
       alert(error.response?.data?.message || 'Error updating quantity');
