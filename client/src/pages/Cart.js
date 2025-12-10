@@ -10,16 +10,15 @@ const Cart = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
-      loadCart();
-    } else {
-      setLoading(false);
-    }
+    // Load cart for both logged in users and guests
+    loadCart();
   }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadCart = async () => {
     try {
-      console.log('🔍 Loading cart for user:', user._id);
+      const userType = user ? 'user' : 'guest';
+      console.log('🔍 Loading cart for:', userType);
+      
       const response = await cartAPI.getCart();
       console.log('🔍 Cart API response:', response.data);
       

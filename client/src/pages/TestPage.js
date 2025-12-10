@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import OrderStatus from '../components/OrderStatus';
 import DeliveryNotifications from '../components/DeliveryNotifications';
 import { ToastContainer } from 'react-toastify';
@@ -7,7 +7,53 @@ import './TestPage.css';
 
 const TestPage = () => {
   const [showNotifications, setShowNotifications] = useState(false);
-  const [orderId, setOrderId] = useState('689c822ba89dd55d26c15cb3'); // Default test order ID
+  const [orderId, setOrderId] = useState('689c822ba89dd55d26c15cb3');
+  const [apiTest, setApiTest] = useState({
+    status: 'Testing...',
+    products: [],
+    error: null,
+    backend: 'Unknown',
+    frontend: 'Loaded'
+  });
+
+  // Test API connectivity on component mount
+  useEffect(() => {
+    console.log('TestPage mounted, testing API...');
+    
+    const testAPI = async () => {
+      try {
+        setApiTest(prev => ({ ...prev, status: 'Testing Backend Connection...' }));
+        
+        // Test backend health
+        const healthResponse = await fetch('http://localhost:5000/api/analytics/health');
+        if (healthResponse.ok) {
+          setApiTest(prev => ({ ...prev, backend: '✅ Connected', status: 'Loading Products...' }));
+          
+          // Test products API
+          const productsResponse = await fetch('http://localhost:5000/api/products');
+          const productsData = await productsResponse.json();
+          
+          setApiTest(prev => ({ 
+            ...prev, 
+            status: `✅ Success! Loaded ${productsData.length} products`,
+            products: productsData.slice(0, 3) // Show first 3 products
+          }));
+        } else {
+          throw new Error('Backend health check failed');
+        }
+      } catch (error) {
+        console.error('API Test failed:', error);
+        setApiTest(prev => ({ 
+          ...prev, 
+          status: '❌ API Connection Failed',
+          error: error.message,
+          backend: '❌ Offline'
+        }));
+      }
+    };
+
+    testAPI();
+  }, []);
 
   // Sample order data for testing notifications
   const sampleOrder = {
@@ -65,8 +111,49 @@ const TestPage = () => {
     <div className="test-page">
       <div className="container">
         <div className="test-header">
-          <h1>🚚 Delivery Notification System Test</h1>
-          <p>This page demonstrates the real-time delivery notifications and order tracking system.</p>
+          <h1>🧪 System Test & Diagnostics</h1>
+          <p>Real-time testing of API connectivity and delivery notification system.</p>
+        </div>
+
+        {/* API Connection Test Results */}
+        <div className="api-test-section" style={{ 
+          background: '#f8f9fa', 
+          padding: '20px', 
+          borderRadius: '10px', 
+          marginBottom: '20px',
+          border: apiTest.error ? '2px solid #dc3545' : '2px solid #28a745'
+        }}>
+          <h2>🔗 API Connection Test</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
+            <div>
+              <strong>Frontend:</strong> <span style={{ color: '#28a745' }}>{apiTest.frontend}</span>
+            </div>
+            <div>
+              <strong>Backend:</strong> <span style={{ color: apiTest.backend.includes('✅') ? '#28a745' : '#dc3545' }}>{apiTest.backend}</span>
+            </div>
+          </div>
+          <div style={{ fontSize: '18px', fontWeight: 'bold', color: apiTest.error ? '#dc3545' : '#28a745' }}>
+            Status: {apiTest.status}
+          </div>
+          
+          {apiTest.error && (
+            <div style={{ color: '#dc3545', marginTop: '10px', padding: '10px', background: '#f8d7da', borderRadius: '5px' }}>
+              <strong>Error:</strong> {apiTest.error}
+            </div>
+          )}
+
+          {apiTest.products.length > 0 && (
+            <div style={{ marginTop: '15px' }}>
+              <h4>📦 Sample Products from Database:</h4>
+              <ul>
+                {apiTest.products.map((product, index) => (
+                  <li key={index} style={{ margin: '5px 0' }}>
+                    <strong>{product.title}</strong> - ₹{product.price} ({product.category})
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         <div className="test-controls">

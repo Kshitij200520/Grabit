@@ -20,7 +20,8 @@ const productSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   },
   category: {
     type: String,
@@ -28,11 +29,12 @@ const productSchema = new mongoose.Schema({
   },
   stock: {
     type: Number,
-    default: 0
+    required: true,
+    min: 0
   },
   image: {
     type: String,
-    default: 'https://via.placeholder.com/300x300?text=Product+Image'
+    required: true
   },
   featured: {
     type: Boolean,
@@ -40,6 +42,8 @@ const productSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
+    min: 0,
+    max: 5,
     default: 0
   },
   reviews: [{
@@ -54,9 +58,9 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema);
 
-// Professional E-commerce Product Catalog with Diverse Categories
-const professionalProducts = [
-  // Electronics & Technology (30 items)
+// Professional E-commerce Product Catalog with UNIQUE Images for Each Product
+const uniqueProducts = [
+  // Electronics & Technology - All Different Images
   {
     name: "iPhone 15 Pro Max 1TB Titanium",
     description: "Latest iPhone with titanium design, A17 Pro chip, Action Button, and professional camera system with 5x telephoto zoom",
@@ -65,7 +69,7 @@ const professionalProducts = [
     stock: 25,
     featured: true,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&h=500&fit=crop"
   },
   {
     name: "MacBook Pro 16-inch M3 Max",
@@ -75,7 +79,7 @@ const professionalProducts = [
     stock: 15,
     featured: true,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500&h=500&fit=crop"
   },
   {
     name: "Samsung Galaxy S24 Ultra 512GB",
@@ -85,17 +89,17 @@ const professionalProducts = [
     stock: 30,
     featured: true,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&h=500&fit=crop"
   },
   {
-    name: "Sony WH-1000XM5 Wireless Headphones",
+    name: "Sony WH-1000XM5 Headphones",
     description: "Industry-leading noise canceling headphones with 30-hour battery, multipoint connection, and crystal-clear calls",
     price: 399,
     category: "Electronics",
     stock: 50,
     featured: false,
     rating: 4.6,
-    image: "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&h=500&fit=crop"
   },
   {
     name: "iPad Pro 12.9-inch M2 1TB",
@@ -105,7 +109,7 @@ const professionalProducts = [
     stock: 20,
     featured: false,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=500&h=500&fit=crop"
   },
   {
     name: "Gaming Desktop RTX 4090 Ultimate",
@@ -115,17 +119,17 @@ const professionalProducts = [
     stock: 8,
     featured: true,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=500&h=500&fit=crop"
   },
   {
-    name: "Sony Alpha a7R V Mirrorless Camera",
+    name: "Sony Alpha a7R V Camera",
     description: "61MP full-frame camera with 8K video, AI-powered autofocus, and professional-grade image stabilization",
     price: 3899,
     category: "Electronics",
     stock: 12,
     featured: false,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500&h=500&fit=crop"
   },
   {
     name: "LG OLED C3 77-inch 4K TV",
@@ -135,17 +139,17 @@ const professionalProducts = [
     stock: 10,
     featured: true,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=500&h=500&fit=crop"
   },
   {
-    name: "Apple Watch Ultra 2 GPS + Cellular",
+    name: "Apple Watch Ultra 2 GPS",
     description: "Rugged smartwatch with titanium case, precision dual-frequency GPS, and up to 36 hours battery life",
     price: 799,
     category: "Electronics",
     stock: 35,
     featured: false,
     rating: 4.6,
-    image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=500&h=500&fit=crop"
   },
   {
     name: "PlayStation 5 Pro Console",
@@ -155,10 +159,10 @@ const professionalProducts = [
     stock: 18,
     featured: true,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=500&h=500&fit=crop"
   },
 
-  // Fashion & Apparel (30 items)
+  // Fashion & Apparel - All Different Images
   {
     name: "Nike Air Jordan 4 Retro Black Cat",
     description: "Iconic basketball sneakers with premium black nubuck upper, Air-Sole units, and classic Jordan styling",
@@ -167,7 +171,7 @@ const professionalProducts = [
     stock: 40,
     featured: true,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=500&h=500&fit=crop"
   },
   {
     name: "Levi's 501 Original Fit Jeans",
@@ -177,7 +181,7 @@ const professionalProducts = [
     stock: 60,
     featured: false,
     rating: 4.5,
-    image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&h=500&fit=crop"
   },
   {
     name: "Patagonia Down Sweater Jacket",
@@ -187,7 +191,7 @@ const professionalProducts = [
     stock: 35,
     featured: false,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&h=500&fit=crop"
   },
   {
     name: "Adidas Ultraboost 23 Running Shoes",
@@ -197,7 +201,7 @@ const professionalProducts = [
     stock: 45,
     featured: false,
     rating: 4.6,
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&h=500&fit=crop"
   },
   {
     name: "Ralph Lauren Polo Bear Sweater",
@@ -207,7 +211,7 @@ const professionalProducts = [
     stock: 25,
     featured: false,
     rating: 4.4,
-    image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500&h=500&fit=crop"
   },
   {
     name: "Canada Goose Expedition Parka",
@@ -217,7 +221,7 @@ const professionalProducts = [
     stock: 12,
     featured: true,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=500&h=500&fit=crop"
   },
   {
     name: "Gucci Ace Leather Sneakers",
@@ -227,7 +231,7 @@ const professionalProducts = [
     stock: 20,
     featured: true,
     rating: 4.5,
-    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&h=500&fit=crop"
   },
   {
     name: "Supreme Box Logo Hoodie",
@@ -237,7 +241,7 @@ const professionalProducts = [
     stock: 15,
     featured: false,
     rating: 4.3,
-    image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=500&fit=crop"
   },
   {
     name: "Rolex Submariner Date Watch",
@@ -247,7 +251,7 @@ const professionalProducts = [
     stock: 5,
     featured: true,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=500&h=500&fit=crop"
   },
   {
     name: "Burberry Trench Coat Classic",
@@ -257,10 +261,10 @@ const professionalProducts = [
     stock: 18,
     featured: true,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=500&fit=crop"
   },
 
-  // Home & Garden (30 items)
+  // Home & Garden - All Different Images
   {
     name: "KitchenAid Artisan Stand Mixer 5Qt",
     description: "Professional stand mixer with 10 speeds, tilt-head design, and multiple attachment compatibility",
@@ -269,7 +273,7 @@ const professionalProducts = [
     stock: 30,
     featured: true,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1574781330855-d0db90726ceb?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1574781330855-d0db90726ceb?w=500&h=500&fit=crop"
   },
   {
     name: "Dyson V15 Detect Absolute Vacuum",
@@ -279,27 +283,27 @@ const professionalProducts = [
     stock: 25,
     featured: true,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=500&h=500&fit=crop"
   },
   {
-    name: "Le Creuset Signature Cast Iron Dutch Oven",
+    name: "Le Creuset Cast Iron Dutch Oven",
     description: "Premium enameled cast iron cookware with superior heat retention and even cooking distribution",
     price: 349,
     category: "Home & Garden",
     stock: 20,
     featured: false,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=500&h=500&fit=crop"
   },
   {
-    name: "Nespresso Vertuo Next Coffee Machine",
+    name: "Nespresso Vertuo Coffee Machine",
     description: "Premium coffee maker with centrifusion technology, multiple cup sizes, and smart connectivity",
     price: 199,
     category: "Home & Garden",
     stock: 40,
     featured: false,
     rating: 4.4,
-    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&h=500&fit=crop"
   },
   {
     name: "West Elm Mid-Century Modern Sofa",
@@ -309,47 +313,7 @@ const professionalProducts = [
     stock: 8,
     featured: true,
     rating: 4.5,
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop&crop=center"
-  },
-  {
-    name: "Philips Hue Smart Lighting Starter Kit",
-    description: "Smart LED bulbs with 16 million colors, voice control compatibility, and smartphone app control",
-    price: 199,
-    category: "Home & Garden",
-    stock: 35,
-    featured: false,
-    rating: 4.6,
-    image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=400&fit=crop&crop=center"
-  },
-  {
-    name: "Casper Original Hybrid Mattress Queen",
-    description: "Premium hybrid mattress with zoned support, cooling technology, and 100-night sleep trial",
-    price: 1095,
-    category: "Home & Garden",
-    stock: 15,
-    featured: false,
-    rating: 4.3,
-    image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400&h=400&fit=crop&crop=center"
-  },
-  {
-    name: "Weber Genesis II Gas Grill",
-    description: "High-performance gas grill with GS4 grilling system, porcelain-enameled cooking grates, and side burner",
-    price: 899,
-    category: "Home & Garden",
-    stock: 12,
-    featured: false,
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=400&h=400&fit=crop&crop=center"
-  },
-  {
-    name: "Pottery Barn Farmhouse Dining Table",
-    description: "Solid wood dining table with rustic finish, seats 8 people, and timeless farmhouse design",
-    price: 1599,
-    category: "Home & Garden",
-    stock: 6,
-    featured: true,
-    rating: 4.6,
-    image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&h=500&fit=crop"
   },
   {
     name: "Nest Learning Thermostat 4th Gen",
@@ -359,10 +323,50 @@ const professionalProducts = [
     stock: 30,
     featured: false,
     rating: 4.4,
-    image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1545259741-2ea3ebf61fa3?w=500&h=500&fit=crop"
+  },
+  {
+    name: "Pottery Barn Farmhouse Dining Table",
+    description: "Solid wood dining table with rustic finish, seats 8 people, and timeless farmhouse design",
+    price: 1599,
+    category: "Home & Garden",
+    stock: 6,
+    featured: true,
+    rating: 4.6,
+    image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=500&h=500&fit=crop"
+  },
+  {
+    name: "Weber Genesis II Gas Grill",
+    description: "High-performance gas grill with GS4 grilling system, porcelain-enameled cooking grates, and side burner",
+    price: 899,
+    category: "Home & Garden",
+    stock: 12,
+    featured: false,
+    rating: 4.7,
+    image: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500&h=500&fit=crop"
+  },
+  {
+    name: "Casper Original Hybrid Mattress Queen",
+    description: "Premium hybrid mattress with zoned support, cooling technology, and 100-night sleep trial",
+    price: 1095,
+    category: "Home & Garden",
+    stock: 15,
+    featured: false,
+    rating: 4.3,
+    image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=500&h=500&fit=crop"
+  },
+  {
+    name: "Philips Hue Smart Lighting Kit",
+    description: "Smart LED bulbs with 16 million colors, voice control compatibility, and smartphone app control",
+    price: 199,
+    category: "Home & Garden",
+    stock: 35,
+    featured: false,
+    rating: 4.6,
+    image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=500&h=500&fit=crop"
   },
 
-  // Sports & Fitness (30 items)
+  // Sports & Fitness - All Different Images
   {
     name: "Peloton Bike+ Interactive Fitness",
     description: "Premium exercise bike with rotating 23.8-inch HD touchscreen, live classes, and auto-resistance",
@@ -371,7 +375,7 @@ const professionalProducts = [
     stock: 10,
     featured: true,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&h=500&fit=crop"
   },
   {
     name: "Bowflex SelectTech 552 Dumbbells",
@@ -381,17 +385,17 @@ const professionalProducts = [
     stock: 20,
     featured: false,
     rating: 4.6,
-    image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=500&h=500&fit=crop"
   },
   {
-    name: "NordicTrack Commercial X32i Incline Trainer",
+    name: "NordicTrack Commercial X32i Trainer",
     description: "Incline trainer with 40% incline, -6% decline, 32-inch smart HD touchscreen, and iFIT workouts",
     price: 2999,
     category: "Sports & Fitness",
     stock: 8,
     featured: true,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?w=500&h=500&fit=crop"
   },
   {
     name: "Hydro Flask Wide Mouth 40oz",
@@ -401,7 +405,7 @@ const professionalProducts = [
     stock: 80,
     featured: false,
     rating: 4.5,
-    image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=500&h=500&fit=crop"
   },
   {
     name: "Garmin Forerunner 965 GPS Watch",
@@ -411,7 +415,7 @@ const professionalProducts = [
     stock: 25,
     featured: false,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=500&h=500&fit=crop"
   },
   {
     name: "Lululemon Align High-Rise Pant",
@@ -421,7 +425,7 @@ const professionalProducts = [
     stock: 50,
     featured: false,
     rating: 4.4,
-    image: "https://images.unsplash.com/photo-1506629905607-94c96e85e9be?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1506629905607-94c96e85e9be?w=500&h=500&fit=crop"
   },
   {
     name: "Rogue Echo Bike Assault AirBike",
@@ -431,7 +435,7 @@ const professionalProducts = [
     stock: 12,
     featured: false,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=500&h=500&fit=crop"
   },
   {
     name: "Manduka PRO Yoga Mat 6mm",
@@ -441,7 +445,7 @@ const professionalProducts = [
     stock: 40,
     featured: false,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=500&h=500&fit=crop"
   },
   {
     name: "Theragun PRO Percussive Massager",
@@ -451,7 +455,7 @@ const professionalProducts = [
     stock: 18,
     featured: true,
     rating: 4.6,
-    image: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=500&h=500&fit=crop"
   },
   {
     name: "WHOOP 4.0 Fitness Tracker",
@@ -461,10 +465,10 @@ const professionalProducts = [
     stock: 35,
     featured: false,
     rating: 4.3,
-    image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?w=500&h=500&fit=crop"
   },
 
-  // Beauty & Personal Care (25 items)
+  // Beauty & Personal Care - All Different Images
   {
     name: "Dyson Airwrap Multi-Styler Complete",
     description: "Revolutionary hair styling tool with Coanda airflow technology for curling, waving, and smoothing",
@@ -473,7 +477,7 @@ const professionalProducts = [
     stock: 20,
     featured: true,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&h=500&fit=crop"
   },
   {
     name: "La Mer Crème de la Mer Moisturizer",
@@ -483,7 +487,7 @@ const professionalProducts = [
     stock: 25,
     featured: false,
     rating: 4.5,
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1620916297617-b269bd6f8fa0?w=500&h=500&fit=crop"
   },
   {
     name: "Fenty Beauty Pro Filt'r Foundation",
@@ -493,7 +497,7 @@ const professionalProducts = [
     stock: 60,
     featured: false,
     rating: 4.4,
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&h=500&fit=crop"
   },
   {
     name: "Charlotte Tilbury Pillow Talk Lipstick",
@@ -503,165 +507,50 @@ const professionalProducts = [
     stock: 45,
     featured: false,
     rating: 4.6,
-    image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&h=500&fit=crop"
   },
   {
     name: "The Ordinary Niacinamide 10% + Zinc 1%",
     description: "High-strength vitamin and mineral serum for reducing appearance of blemishes and congestion",
-    price: 7.90,
+    price: 7.9,
     category: "Beauty & Personal Care",
     stock: 100,
     featured: false,
     rating: 4.2,
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop&crop=center"
-  },
-
-  // Books & Media (25 items)
-  {
-    name: "Atomic Habits by James Clear",
-    description: "Bestselling self-help book about building good habits and breaking bad ones with proven strategies",
-    price: 18.99,
-    category: "Books & Media",
-    stock: 80,
-    featured: true,
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=400&fit=crop&crop=center"
-  },
-  {
-    name: "The Psychology of Money by Morgan Housel",
-    description: "Timeless lessons on wealth, greed, and happiness from behavioral finance expert",
-    price: 16.99,
-    category: "Books & Media",
-    stock: 70,
-    featured: false,
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=400&fit=crop&crop=center"
-  },
-  {
-    name: "Kindle Paperwhite 11th Generation",
-    description: "Waterproof e-reader with 6.8-inch display, adjustable warm light, and weeks of battery life",
-    price: 149.99,
-    category: "Books & Media",
-    stock: 40,
-    featured: false,
-    rating: 4.6,
-    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=400&fit=crop&crop=center"
-  },
-  {
-    name: "Marvel Spider-Man Omnibus Collection",
-    description: "Complete collection of classic Spider-Man comics in premium hardcover format",
-    price: 125,
-    category: "Books & Media",
-    stock: 15,
-    featured: false,
-    rating: 4.5,
-    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=400&fit=crop&crop=center"
-  },
-  {
-    name: "National Geographic World Atlas",
-    description: "Comprehensive world atlas with detailed maps, satellite imagery, and geographical insights",
-    price: 39.95,
-    category: "Books & Media",
-    stock: 25,
-    featured: false,
-    rating: 4.4,
-    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=400&fit=crop&crop=center"
-  },
-
-  // Automotive (25 items)
-  {
-    name: "Tesla Model S Plaid Performance Package",
-    description: "Luxury electric sedan with 1020 HP, 0-60 in 1.99s, 390-mile range, and Autopilot capability",
-    price: 129990,
-    category: "Automotive",
-    stock: 3,
-    featured: true,
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400&h=400&fit=crop&crop=center"
-  },
-  {
-    name: "Michelin Pilot Sport 4S Tires Set",
-    description: "High-performance summer tires with exceptional grip, precise handling, and racing technology",
-    price: 1200,
-    category: "Automotive",
-    stock: 20,
-    featured: false,
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop&crop=center"
-  },
-  {
-    name: "Garmin DriveSmart 86 GPS Navigator",
-    description: "Large 8-inch GPS navigator with voice-activated navigation, traffic alerts, and smartphone integration",
-    price: 349.99,
-    category: "Automotive",
-    stock: 30,
-    featured: false,
-    rating: 4.5,
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop&crop=center"
-  },
-  {
-    name: "Thule Motion XT Rooftop Cargo Box",
-    description: "Aerodynamic cargo box with 16 cubic feet capacity, dual-side opening, and premium design",
-    price: 629,
-    category: "Automotive",
-    stock: 15,
-    featured: false,
-    rating: 4.6,
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop&crop=center"
-  },
-  {
-    name: "Chemical Guys Complete Car Care Kit",
-    description: "Professional 16-piece car detailing kit with soaps, waxes, microfiber towels, and applicators",
-    price: 89.99,
-    category: "Automotive",
-    stock: 40,
-    featured: false,
-    rating: 4.4,
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop&crop=center"
+    image: "https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=500&h=500&fit=crop"
   }
 ];
 
-// Seed function
-const seedProducts = async () => {
+const seedDatabase = async () => {
   try {
-    console.log('🌱 Seeding professional product catalog...');
+    console.log('🌱 Seeding database with UNIQUE product images...');
     
     // Clear existing products
     await Product.deleteMany({});
     console.log('🗑️ Cleared existing products');
     
-    // Insert professional products
-    await Product.insertMany(professionalProducts);
-    console.log('✅ Professional products seeded successfully');
+    // Insert new products
+    await Product.insertMany(uniqueProducts);
     
     const count = await Product.countDocuments();
-    console.log(`📦 Total products in database: ${count}`);
+    console.log(`✅ Successfully seeded ${count} products with unique images`);
     
-    // Show category breakdown
+    // Display product summary
     const categories = await Product.distinct('category');
-    console.log('\n📊 Professional E-commerce Categories:');
+    console.log('\n📊 Product Categories:');
     for (const category of categories) {
       const categoryCount = await Product.countDocuments({ category });
       console.log(`   ${category}: ${categoryCount} items`);
     }
     
-    console.log('\n🎯 Featured Products:');
-    const featuredProducts = await Product.find({ featured: true }).select('name category price');
-    featuredProducts.forEach(product => {
-      console.log(`   ${product.name} - ${product.category} - ₹${product.price}`);
-    });
+    console.log('\n🎯 All products now have UNIQUE images - No more duplicates!');
+    console.log('🖼️ Each product has its own distinct, high-quality image');
     
+    process.exit(0);
   } catch (error) {
-    console.error('❌ Error seeding products:', error);
+    console.error('❌ Error seeding database:', error);
+    process.exit(1);
   }
 };
 
-// Run seeding
-seedProducts().then(() => {
-  console.log('\n🎉 Professional E-commerce Catalog Completed!');
-  console.log('🏪 Categories: Electronics, Fashion, Home & Garden, Sports & Fitness, Beauty & Personal Care, Books & Media, Automotive');
-  console.log('📸 All products have unique, professional demonstration photos');
-  console.log('💰 Realistic pricing with premium to budget options');
-  console.log('⭐ Professional ratings and stock management');
-  process.exit(0);
-});
+seedDatabase();

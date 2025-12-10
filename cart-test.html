@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check Cart Status</title>
+</head>
+<body>
+    <h2>Cart Status Checker</h2>
+    <button onclick="checkCart()">Check Cart</button>
+    <button onclick="addTestItem()">Add Test Item</button>
+    <button onclick="clearGuestId()">Clear Guest ID</button>
+    <div id="result"></div>
+
+    <script>
+        function checkCart() {
+            const guestId = localStorage.getItem('guestId');
+            const result = document.getElementById('result');
+            result.innerHTML = '<h3>Local Storage Info:</h3>';
+            result.innerHTML += `<p>Guest ID: ${guestId}</p>`;
+            
+            // Fetch cart from API
+            fetch('http://localhost:5000/api/cart', {
+                headers: guestId ? { 'X-Guest-ID': guestId } : {}
+            })
+            .then(response => response.json())
+            .then(data => {
+                result.innerHTML += `<h3>Cart Data:</h3>`;
+                result.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            })
+            .catch(error => {
+                result.innerHTML += `<p>Error: ${error}</p>`;
+            });
+        }
+
+        function addTestItem() {
+            let guestId = localStorage.getItem('guestId');
+            if (!guestId) {
+                guestId = 'guest_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('guestId', guestId);
+            }
+
+            // Add a test item
+            fetch('http://localhost:5000/api/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Guest-ID': guestId
+                },
+                body: JSON.stringify({
+                    productId: '691c4090b6d3962cc5131b15', // Test product ID
+                    quantity: 1
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = `<h3>Item Added:</h3><pre>${JSON.stringify(data, null, 2)}</pre>`;
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML = `<p>Error: ${error}</p>`;
+            });
+        }
+
+        function clearGuestId() {
+            localStorage.removeItem('guestId');
+            document.getElementById('result').innerHTML = '<p>Guest ID cleared</p>';
+        }
+    </script>
+</body>
+</html>

@@ -6,7 +6,13 @@ const authMiddleware = require('../middleware/auth');
 
 // Guest user session helper
 const getGuestUserId = (req) => {
-  // Use session ID or create a temporary guest ID
+  // Check for guest ID in header first (from frontend localStorage)
+  if (req.headers['x-guest-id']) {
+    req.session.guestId = req.headers['x-guest-id'];
+    return req.headers['x-guest-id'];
+  }
+  
+  // Fallback to session-based guest ID
   if (!req.session.guestId) {
     req.session.guestId = 'guest_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
   }

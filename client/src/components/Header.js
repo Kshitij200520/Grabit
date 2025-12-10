@@ -12,6 +12,7 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
+    // Clear user and cart - this will trigger cart cleanup in CartContext
     setUser(null);
     navigate('/');
     setMobileMenuOpen(false);

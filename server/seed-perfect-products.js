@@ -1093,7 +1093,7 @@ const seedProducts = async () => {
     console.log('\n🎯 Featured Products:');
     const featuredProducts = await Product.find({ featured: true }).select('name category price');
     featuredProducts.forEach(product => {
-      console.log(`   ${product.name} - ${product.category} - $${product.price}`);
+      console.log(`   ${product.name} - ${product.category} - ₹${product.price}`);
     });
     
   } catch (error) {
@@ -1106,7 +1106,7 @@ seedProducts().then(() => {
   console.log('\n🎉 PERFECT E-commerce Catalog Completed!');
   console.log('🏪 Categories: Electronics, Fashion, Home & Garden, Sports & Fitness');
   console.log('📸 100% UNIQUE images - NO duplicates, each matches description perfectly');
-  console.log('💰 Realistic pricing from $12.99 to $15,000');
+  console.log('💰 Realistic pricing from ₹12.99 to ₹15,000');
   console.log('⭐ Professional ratings and stock management');
   console.log('🔗 High-resolution 500x500px professional images');
   console.log('🎯 Perfect for professional project demonstration');

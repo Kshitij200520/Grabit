@@ -138,10 +138,10 @@ const Orders = () => {
                   )}
                 </div>
                 
-                <div className="order-footer">
-                  <div className="order-total">
-                    <strong>Total: ${order.totalPrice.toFixed(2)}</strong>
-                  </div>
+                  <div className="order-footer">
+                    <div className="order-total">
+                      <strong>Total: ₹{order.totalPrice.toFixed(2)}</strong>
+                    </div>
                   <Link 
                     to={`/orders/${order._id}`}
                     className="btn btn-primary"

@@ -20,8 +20,7 @@ const cartItemSchema = new mongoose.Schema({
 
 const cartSchema = new mongoose.Schema({
   user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: mongoose.Schema.Types.Mixed, // Support both ObjectId and String for guest users
     required: true
   },
   items: [cartItemSchema],

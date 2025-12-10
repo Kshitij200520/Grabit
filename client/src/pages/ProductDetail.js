@@ -40,12 +40,6 @@ const ProductDetail = () => {
   }, [id, navigate]);
 
   const handleAddToCart = async () => {
-    if (!user) {
-      toast.error('Please login to add items to cart');
-      navigate('/login');
-      return;
-    }
-
     setAddingToCart(true);
     try {
       const response = await cartAPI.addToCart({
@@ -58,7 +52,8 @@ const ProductDetail = () => {
         payload: response.data.cart || response.data
       });
 
-      toast.success(`${product.name} added to cart! 🛒`);
+      const userType = user ? 'user' : 'guest';
+      toast.success(`${product.name} added to cart as ${userType}! 🛒`);
     } catch (error) {
       console.error('❌ Add to cart error:', error);
       toast.error(error.response?.data?.message || 'Error adding to cart');
@@ -68,12 +63,6 @@ const ProductDetail = () => {
   };
 
   const handleBuyNow = async () => {
-    if (!user) {
-      toast.error('Please login to purchase');
-      navigate('/login');
-      return;
-    }
-
     setBuyingNow(true);
     try {
       // First add to cart
@@ -87,8 +76,14 @@ const ProductDetail = () => {
         payload: response.data.cart || response.data
       });
 
-      // Then navigate directly to checkout
-      toast.success('Redirecting to checkout... 🚀');
+      // Then navigate to checkout - guest users can also purchase
+      const userType = user ? 'user' : 'guest';
+      toast.success(`Redirecting to checkout as ${userType}... 🚀`);
+      
+      if (!user) {
+        toast.info('Guest checkout available! No registration required 🎉');
+      }
+      
       navigate('/checkout');
     } catch (error) {
       console.error('❌ Buy now error:', error);

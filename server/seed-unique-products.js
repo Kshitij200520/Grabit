@@ -1092,7 +1092,7 @@ const seedProducts = async () => {
     console.log('\n🎯 Featured Products:');
     const featuredProducts = await Product.find({ featured: true }).select('name category price');
     featuredProducts.forEach(product => {
-      console.log(`   ${product.name} - ${product.category} - $${product.price}`);
+      console.log(`   ${product.name} - ${product.category} - ₹${product.price}`);
     });
     
   } catch (error) {
