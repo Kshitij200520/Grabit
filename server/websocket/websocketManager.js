@@ -234,12 +234,14 @@ class WebSocketManager {
   }
 
   handleNotifications(socket) {
-    // Send demo notifications for all users (including guests)
-    if (!socket.isAuthenticated) {
-      // Send demo notifications for guest users
+    // Send demo notifications for guest users only once per session
+    if (!socket.isAuthenticated && !socket.demoNotificationsSent) {
+      socket.demoNotificationsSent = true; // Mark as sent
+      
+      // Send demo notifications
       setTimeout(() => {
         socket.emit('notification', {
-          id: 'demo_1',
+          id: `demo_1_${socket.id}`,
           type: 'promotion',
           title: '🎉 Welcome to Grabit!',
           message: 'Enjoy live real-time features! Add items to cart to see updates.',
@@ -250,7 +252,7 @@ class WebSocketManager {
 
       setTimeout(() => {
         socket.emit('notification', {
-          id: 'demo_2', 
+          id: `demo_2_${socket.id}`, 
           type: 'inventory',
           title: '📊 Real-time Inventory',
           message: 'Product stock updates in real-time as you browse.',
@@ -261,7 +263,7 @@ class WebSocketManager {
 
       setTimeout(() => {
         socket.emit('notification', {
-          id: 'demo_3',
+          id: `demo_3_${socket.id}`,
           type: 'security',
           title: '🔒 Secure Shopping',
           message: 'Your data is protected with advanced security measures.',

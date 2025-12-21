@@ -148,76 +148,67 @@ class DatabaseManager {
 
       // User indexes
       const User = mongoose.model('User');
-      await User.createIndexes([
-        { email: 1 }, // Unique index for email
-        { role: 1 }, // Index for role-based queries
-        { createdAt: -1 }, // Index for sorting by creation date
-        { 'address.zipCode': 1 }, // Index for location-based queries
-        { isEmailVerified: 1 }, // Index for verification status
-        { lastLogin: -1 }, // Index for activity tracking
-        { 
-          name: 'text', 
-          email: 'text' 
-        } // Text search index
-      ]);
+      try {
+        await User.collection.dropIndexes();
+      } catch (e) {
+        // Ignore if no indexes to drop
+      }
+      await User.collection.createIndex({ email: 1 }, { unique: true });
+      await User.collection.createIndex({ role: 1 });
+      await User.collection.createIndex({ createdAt: -1 });
+      await User.collection.createIndex({ 'address.zipCode': 1 });
+      await User.collection.createIndex({ name: 'text', email: 'text' });
 
       // Product indexes
       const Product = mongoose.model('Product');
-      await Product.createIndexes([
-        { name: 'text', description: 'text' }, // Text search
-        { category: 1 }, // Category filtering
-        { price: 1 }, // Price sorting/filtering
-        { featured: 1 }, // Featured products
-        { stock: 1 }, // Stock availability
-        { createdAt: -1 }, // Latest products
-        { 'rating.average': -1 }, // Top rated products
-        { 
-          category: 1, 
-          price: 1 
-        }, // Compound index for category + price
-        { 
-          featured: 1, 
-          category: 1, 
-          createdAt: -1 
-        }, // Compound index for featured category products
-        {
-          location: '2dsphere' // Geospatial index if products have location
-        }
-      ]);
+      try {
+        await Product.collection.dropIndexes();
+      } catch (e) {
+        // Ignore if no indexes to drop
+      }
+      await Product.collection.createIndex({ name: 'text', description: 'text' });
+      await Product.collection.createIndex({ category: 1 });
+      await Product.collection.createIndex({ price: 1 });
+      await Product.collection.createIndex({ featured: 1 });
+      await Product.collection.createIndex({ stock: 1 });
+      await Product.collection.createIndex({ createdAt: -1 });
+      await Product.collection.createIndex({ category: 1, price: 1 });
+      await Product.collection.createIndex({ featured: 1, category: 1, createdAt: -1 });
 
       // Order indexes
       const Order = mongoose.model('Order');
       if (Order) {
-        await Order.createIndexes([
-          { userId: 1 }, // User's orders
-          { status: 1 }, // Order status filtering
-          { createdAt: -1 }, // Order history sorting
-          { 'payment.paymentId': 1 }, // Payment tracking
-          { deliveryDate: 1 }, // Delivery tracking
-          { 
-            userId: 1, 
-            createdAt: -1 
-          }, // User's order history
-          { 
-            status: 1, 
-            createdAt: -1 
-          } // Status-based order sorting
-        ]);
+        try {
+          await Order.collection.dropIndexes();
+        } catch (e) {
+          // Ignore if no indexes to drop
+        }
+        await Order.collection.createIndex({ userId: 1 });
+        await Order.collection.createIndex({ status: 1 });
+        await Order.collection.createIndex({ createdAt: -1 });
+        await Order.collection.createIndex({ userId: 1, createdAt: -1 });
+        await Order.collection.createIndex({ status: 1, createdAt: -1 });
       }
 
       // Cart indexes
       const Cart = mongoose.model('Cart');
       if (Cart) {
-        await Cart.createIndexes([
-          { userId: 1 }, // User's cart (unique)
-          { 'items.productId': 1 }, // Product in cart
-          { updatedAt: 1 } // Cart activity tracking
-        ]);
+        try {
+          await Cart.collection.dropIndexes();
+        } catch (e) {
+          // Ignore if no indexes to drop
+        }
+        // Clean up carts with null userId first
+        await Cart.deleteMany({ userId: null });
+        await Cart.collection.createIndex({ userId: 1 }, { unique: true });
+        await Cart.collection.createIndex({ 'items.productId': 1 });
+        await Cart.collection.createIndex({ updatedAt: 1 });
       }
 
       console.log('✅ Database indexes created successfully');
     } catch (error) {
-      console.error('❌ Error creating indexes:', error);
+      console.error('❌ Error creating indexes:', error.message);
+      // Don't throw - let the app continue even if indexes fail
     }
   }
 

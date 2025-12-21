@@ -12,6 +12,7 @@ const RealTimeNotifications = () => {
   
   const [isOpen, setIsOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [displayedNotifications, setDisplayedNotifications] = useState([]);
 
   useEffect(() => {
     if (isConnected) {
@@ -19,17 +20,33 @@ const RealTimeNotifications = () => {
     }
   }, [isConnected, subscribeToNotifications]);
 
+  // Remove duplicates from notifications
   useEffect(() => {
-    const unread = notifications.filter(n => !n.read).length;
-    setUnreadCount(unread);
+    const uniqueNotifications = notifications.reduce((acc, notification) => {
+      const isDuplicate = acc.some(n => 
+        n.id === notification.id || 
+        (n.title === notification.title && n.message === notification.message)
+      );
+      if (!isDuplicate) {
+        acc.push(notification);
+      }
+      return acc;
+    }, []);
+    
+    setDisplayedNotifications(uniqueNotifications);
   }, [notifications]);
+
+  useEffect(() => {
+    const unread = displayedNotifications.filter(n => !n.read).length;
+    setUnreadCount(unread);
+  }, [displayedNotifications]);
 
   const handleMarkAsRead = (notificationId) => {
     markNotificationRead(notificationId);
   };
 
   const handleMarkAllRead = () => {
-    notifications.forEach(notification => {
+    displayedNotifications.forEach(notification => {
       if (!notification.read) {
         markNotificationRead(notification.id);
       }
@@ -111,14 +128,14 @@ const RealTimeNotifications = () => {
           </div>
 
           <div className="notifications-list">
-            {notifications.length === 0 ? (
+            {displayedNotifications.length === 0 ? (
               <div className="no-notifications">
                 <span className="no-notifications-icon">🔔</span>
                 <p>No notifications yet</p>
                 <small>You'll see real-time updates here</small>
               </div>
             ) : (
-              notifications.slice(0, 20).map((notification) => (
+              displayedNotifications.slice(0, 20).map((notification) => (
                 <div 
                   key={notification.id} 
                   className={getNotificationClass(notification.type, notification.read)}

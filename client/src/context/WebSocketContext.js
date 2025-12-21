@@ -19,6 +19,7 @@ export const WebSocketProvider = ({ children }) => {
   const [orderTracking, setOrderTracking] = useState({});
   const [chatMessages, setChatMessages] = useState([]);
   const [inventoryUpdates, setInventoryUpdates] = useState({});
+  const [connectionInitialized, setConnectionInitialized] = useState(false);
 
   // Initialize WebSocket connection
   const connectWebSocket = useCallback((token) => {
@@ -134,7 +135,18 @@ export const WebSocketProvider = ({ children }) => {
     // Notification events
     newSocket.on('notification', (data) => {
       console.log('🔔 New notification:', data);
-      setNotifications(prev => [data, ...prev.slice(0, 49)]); // Keep last 50
+      setNotifications(prev => {
+        // Check if notification already exists to avoid duplicates
+        const exists = prev.some(n => n.id === data.id || 
+          (n.title === data.title && n.message === data.message && 
+           Math.abs(new Date(n.timestamp) - new Date(data.timestamp)) < 5000));
+        
+        if (exists) {
+          return prev; // Skip duplicate
+        }
+        
+        return [data, ...prev.slice(0, 49)]; // Keep last 50
+      });
       
       toast.info(`🔔 ${data.title}: ${data.message}`, {
         position: "top-right",
@@ -297,7 +309,14 @@ export const WebSocketProvider = ({ children }) => {
 
   // Auto-connect when component mounts (for both authenticated and guest users)
   useEffect(() => {
+    // Only connect once
+    if (connectionInitialized) {
+      return;
+    }
+    
+    setConnectionInitialized(true);
     const token = localStorage.getItem('token');
+    
     if (!socket) {
       // Connect with token if available, otherwise as guest
       connectWebSocket(token || 'guest');
@@ -309,7 +328,7 @@ export const WebSocketProvider = ({ children }) => {
         socket.disconnect();
       }
     };
-  }, [connectWebSocket, socket]);
+  }, [connectionInitialized, connectWebSocket, socket]);
 
   // Clear data when disconnected
   useEffect(() => {

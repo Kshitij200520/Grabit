@@ -10,7 +10,7 @@ const uniqueProducts = [
     price: 159900,
     category: "Electronics",
     stock: 25,
-    image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500",
+    image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500",
     featured: true
   },
   {
@@ -19,7 +19,7 @@ const uniqueProducts = [
     price: 399900,
     category: "Electronics", 
     stock: 15,
-    image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500",
+    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500",
     featured: true
   },
   {
@@ -28,7 +28,7 @@ const uniqueProducts = [
     price: 139900,
     category: "Electronics",
     stock: 30,
-    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500",
+    image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=500",
     featured: true
   },
   {
@@ -37,7 +37,7 @@ const uniqueProducts = [
     price: 29990,
     category: "Electronics",
     stock: 50,
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500"
+    image: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500"
   },
   {
     name: "Dell XPS 13 Laptop",
@@ -45,7 +45,7 @@ const uniqueProducts = [
     price: 124990,
     category: "Electronics", 
     stock: 20,
-    image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500"
+    image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500"
   },
   {
     name: "Nike Air Jordan 4 Retro",
@@ -53,7 +53,7 @@ const uniqueProducts = [
     price: 21000,
     category: "Fashion",
     stock: 40,
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
+    image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500",
     featured: true
   },
   {
@@ -62,7 +62,7 @@ const uniqueProducts = [
     price: 18000,
     category: "Fashion",
     stock: 35,
-    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500"
+    image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=500"
   },
   {
     name: "Levi's 501 Original Jeans",
@@ -70,7 +70,7 @@ const uniqueProducts = [
     price: 7999,
     category: "Fashion",
     stock: 60,
-    image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500"
+    image: "https://images.unsplash.com/photo-1542272454315-7e61eff2b0a0?w=500"
   },
   {
     name: "Ray-Ban Aviator Sunglasses",
@@ -78,7 +78,7 @@ const uniqueProducts = [
     price: 15000,
     category: "Fashion",
     stock: 45,
-    image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500"
+    image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500"
   },
   {
     name: "Tommy Hilfiger Polo Shirt",
@@ -86,7 +86,7 @@ const uniqueProducts = [
     price: 4999,
     category: "Fashion",
     stock: 80,
-    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500"
+    image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=500"
   },
   {
     name: "IKEA MALM Bed Frame",
@@ -94,7 +94,7 @@ const uniqueProducts = [
     price: 24999,
     category: "Home & Garden",
     stock: 15,
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500",
+    image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=500",
     featured: true
   },
   {
@@ -103,7 +103,7 @@ const uniqueProducts = [
     price: 129999,
     category: "Home & Garden",
     stock: 8,
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500",
+    image: "https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=500",
     featured: true
   },
   {
@@ -112,7 +112,7 @@ const uniqueProducts = [
     price: 37999,
     category: "Home & Garden",
     stock: 25,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500",
+    image: "https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=500",
     featured: true
   },
   {
@@ -121,7 +121,7 @@ const uniqueProducts = [
     price: 84999,
     category: "Home & Garden",
     stock: 12,
-    image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=500"
+    image: "https://images.unsplash.com/photo-1558317374-067fb5f30001?w=500"
   },
   {
     name: "Philips Air Fryer",
@@ -129,7 +129,7 @@ const uniqueProducts = [
     price: 12999,
     category: "Home & Garden",
     stock: 30,
-    image: "https://images.unsplash.com/photo-1585488768889-3400c5b4b7ff?w=500"
+    image: "https://images.unsplash.com/photo-1621959275044-fb2c001a9357?w=500"
   },
   {
     name: "Peloton Bike+",
@@ -137,7 +137,7 @@ const uniqueProducts = [
     price: 269500,
     category: "Sports & Fitness",
     stock: 5,
-    image: "https://images.unsplash.com/photo-1571019613914-85e3cbcc1413?w=500",
+    image: "https://www.garagegymreviews.com/wp-content/uploads/peloton-bike-plus-white-background.jpg",
     featured: true
   },
   {
@@ -146,7 +146,7 @@ const uniqueProducts = [
     price: 8999,
     category: "Sports & Fitness",
     stock: 40,
-    image: "https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=500"
+    image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500"
   },
   {
     name: "Yoga Mat Premium",
@@ -154,7 +154,7 @@ const uniqueProducts = [
     price: 2999,
     category: "Sports & Fitness", 
     stock: 100,
-    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=500"
+    image: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=500"
   },
   {
     name: "Protein Powder Whey",
@@ -162,7 +162,7 @@ const uniqueProducts = [
     price: 5999,
     category: "Sports & Fitness",
     stock: 75,
-    image: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=500"
+    image: "https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?w=500"
   },
   {
     name: "Running Shoes Nike Air",
@@ -170,7 +170,7 @@ const uniqueProducts = [
     price: 12999,
     category: "Sports & Fitness",
     stock: 55,
-    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500"
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500"
   },
   {
     name: "L'Oreal Paris Foundation",
@@ -178,7 +178,7 @@ const uniqueProducts = [
     price: 1299,
     category: "Beauty & Personal Care",
     stock: 120,
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500"
+    image: "https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?w=500"
   },
   {
     name: "Dyson Hair Dryer",
@@ -186,7 +186,7 @@ const uniqueProducts = [
     price: 39999,
     category: "Beauty & Personal Care",
     stock: 18,
-    image: "https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=500",
+    image: "https://media.istockphoto.com/id/1643940503/photo/fashionable-high-end-hair-dryer.jpg?s=1024x1024&w=is&k=20&c=Db1DCliOJlaL6mqzXXQ0C8pz6-lfMd0jklDZuRal-as=",
     featured: true
   },
   {
@@ -195,7 +195,7 @@ const uniqueProducts = [
     price: 14999,
     category: "Beauty & Personal Care",
     stock: 25,
-    image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=500"
+    image: "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=500"
   },
   {
     name: "Skincare Set The Ordinary", 
@@ -203,7 +203,7 @@ const uniqueProducts = [
     price: 4999,
     category: "Beauty & Personal Care",
     stock: 80,
-    image: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500"
+    image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500"
   },
   {
     name: "Electric Toothbrush Oral-B",
@@ -211,7 +211,7 @@ const uniqueProducts = [
     price: 7999,
     category: "Beauty & Personal Care",
     stock: 45,
-    image: "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500"
+    image: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=500"
   }
 ];
 
