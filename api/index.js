@@ -10,7 +10,11 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['https://client-hjw7qbqmp-kshitij-kohlis-projects.vercel.app', 'http://localhost:3000'],
+  origin: [
+    'https://grabit-ecommerce-fullstack.vercel.app',
+    'https://client-hjw7qbqmp-kshitij-kohlis-projects.vercel.app',
+    'http://localhost:3000'
+  ],
   credentials: true
 }));
 app.use(express.json());
@@ -27,7 +31,11 @@ const connectDB = async () => {
   }
 
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://demo:demo@cluster.mongodb.net/ecommerce?retryWrites=true&w=majority', {
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI environment variable is required');
+    }
+
+    const conn = await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       bufferCommands: false,
@@ -51,16 +59,6 @@ const productsRouter = require('../server/routes/products');
 const cartRouter = require('../server/routes/cart');
 const ordersRouter = require('../server/routes/orders');
 const paymentsRouter = require('../server/routes/payments');
-
-// Connect to database on startup
-connectDB();
-
-// Mount API routes
-app.use('/api/users', usersRouter);
-app.use('/api/products', productsRouter);
-app.use('/api/cart', cartRouter);
-app.use('/api/orders', ordersRouter);
-app.use('/api/payments', paymentsRouter);
 
 // Root route
 app.get('/', (req, res) => {
@@ -92,6 +90,23 @@ app.get('/api/health', async (req, res) => {
     });
   }
 });
+
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('❌ Database connection failed:', error.message);
+    res.status(503).json({ message: 'Database connection unavailable' });
+  }
+});
+
+// Mount API routes
+app.use('/api/users', usersRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/cart', cartRouter);
+app.use('/api/orders', ordersRouter);
+app.use('/api/payments', paymentsRouter);
 
 console.log('✅ All API routes configured for Vercel');
 
