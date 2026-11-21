@@ -37,8 +37,8 @@ router.post('/', async (req, res) => {
           // Try to authenticate
           const jwt = require('jsonwebtoken');
           const token = req.headers.authorization.split(' ')[1];
-          const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret');
-          userId = decoded.userId;
+          const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+          userId = decoded.userId || decoded.id;
         } catch (err) {
           // If authentication fails, use guest ID
           userId = getGuestUserId(req);

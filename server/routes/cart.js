@@ -36,8 +36,8 @@ router.get('/', async (req, res) => {
         // Try to authenticate
         const jwt = require('jsonwebtoken');
         const token = req.headers.authorization.split(' ')[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret');
-        userId = decoded.userId;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+        userId = decoded.userId || decoded.id || getGuestUserId(req);
       } catch (err) {
         // If authentication fails, use guest ID
         userId = getGuestUserId(req);
@@ -74,8 +74,8 @@ router.post('/add', async (req, res) => {
         // Try to authenticate
         const jwt = require('jsonwebtoken');
         const token = req.headers.authorization.split(' ')[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret');
-        userId = decoded.userId;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+        userId = decoded.userId || decoded.id || getGuestUserId(req);
       } catch (err) {
         // If authentication fails, use guest ID
         userId = getGuestUserId(req);
@@ -141,8 +141,8 @@ router.delete('/remove/:productId', async (req, res) => {
         // Try to authenticate
         const jwt = require('jsonwebtoken');
         const token = req.headers.authorization.split(' ')[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret');
-        userId = decoded.userId;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+        userId = decoded.userId || decoded.id || getGuestUserId(req);
       } catch (err) {
         // If authentication fails, use guest ID
         userId = getGuestUserId(req);
@@ -181,8 +181,8 @@ router.put('/update/:productId', async (req, res) => {
         // Try to authenticate
         const jwt = require('jsonwebtoken');
         const token = req.headers.authorization.split(' ')[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret');
-        userId = decoded.userId;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+        userId = decoded.userId || decoded.id || getGuestUserId(req);
       } catch (err) {
         // If authentication fails, use guest ID
         userId = getGuestUserId(req);
@@ -232,8 +232,8 @@ router.delete('/clear', async (req, res) => {
         // Try to authenticate
         const jwt = require('jsonwebtoken');
         const token = req.headers.authorization.split(' ')[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret');
-        userId = decoded.userId;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+        userId = decoded.userId || decoded.id || getGuestUserId(req);
       } catch (err) {
         // If authentication fails, use guest ID
         userId = getGuestUserId(req);
