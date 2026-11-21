@@ -68,8 +68,9 @@ const Login = () => {
       const response = await userAPI.login(formData);
       
       // Store token and user data
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
+      const accessToken = response.data.accessToken || response.data.token;
+      if (accessToken) {
+        localStorage.setItem('token', accessToken);
       }
       
       setUser(response.data.user || response.data);
