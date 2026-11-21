@@ -3,6 +3,11 @@ import io from 'socket.io-client';
 import { toast } from 'react-toastify';
 
 const WebSocketContext = createContext();
+const REALTIME_URL = process.env.REACT_APP_REALTIME_URL || (
+  process.env.NODE_ENV === 'development'
+    ? process.env.REACT_APP_API_URL?.replace(/\/api\/?$/, '') || 'http://localhost:5000'
+    : ''
+);
 
 export const useWebSocket = () => {
   const context = useContext(WebSocketContext);
@@ -27,9 +32,12 @@ export const WebSocketProvider = ({ children }) => {
       socket.disconnect();
     }
 
-    const serverUrl = process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:5000';
+    if (!REALTIME_URL) {
+      setIsConnected(false);
+      return null;
+    }
     
-    const newSocket = io(serverUrl, {
+    const newSocket = io(REALTIME_URL, {
       auth: {
         token: token || 'guest'
       },

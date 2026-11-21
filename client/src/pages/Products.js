@@ -1,100 +1,49 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { productAPI } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import './Products.css';
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
-  const [categories, setCategories] = useState([]);
+  const categories = useMemo(
+    () => [...new Set(allProducts.map(product => product.category))].filter(Boolean),
+    [allProducts]
+  );
+  const products = useMemo(() => {
+    const normalizedSearch = search.trim().toLowerCase();
+    return allProducts.filter(product => {
+      const matchesCategory = !category || product.category === category;
+      const matchesSearch = !normalizedSearch ||
+        product.name.toLowerCase().includes(normalizedSearch) ||
+        product.description.toLowerCase().includes(normalizedSearch);
+      return matchesCategory && matchesSearch;
+    });
+  }, [allProducts, category, search]);
 
-  const loadProducts = useCallback(async () => {
-    try {
-      setLoading(true);
-      const params = {};
-      if (search) params.search = search;
-      if (category) params.category = category;
-      
-      // Retry logic for better reliability
-      let retries = 3;
-      while (retries > 0) {
-        try {
-          const response = await productAPI.getAll(params);
-          console.log('Products API response:', response);
-          
-          // Handle different response formats
-          let products = [];
-          if (Array.isArray(response.data)) {
-            products = response.data;
-          } else if (Array.isArray(response)) {
-            products = response;
-          } else if (response.data && typeof response.data === 'object') {
-            // Handle object response format - extract array
-            products = Object.values(response.data).filter(item => typeof item === 'object' && item._id);
-          } else {
-            console.warn('Unexpected response format:', response);
-            products = [];
-          }
-          
-          console.log('Processed products:', products);
-          setProducts(products);
-          break;
-        } catch (error) {
-          retries--;
-          if (retries === 0) {
-            console.error('All retries failed, setting empty array');
-            setProducts([]);
-            break;
-          }
-          await new Promise(resolve => setTimeout(resolve, 500)); // Wait 500ms before retry
+  useEffect(() => {
+    let active = true;
+
+    productAPI.getAll()
+      .then(response => {
+        if (active) {
+          setAllProducts(Array.isArray(response.data) ? response.data : []);
         }
-      }
-    } catch (error) {
-      console.error('Error loading products:', error);
-      setProducts([]); // Ensure it's always an array
-    } finally {
-      setLoading(false);
-    }
-  }, [search, category]);
+      })
+      .catch(error => {
+        console.error('Error loading products:', error);
+        if (active) setAllProducts([]);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
 
-  // Load all categories separately (not dependent on filtered products)
-  const loadCategories = useCallback(async () => {
-    try {
-      const response = await productAPI.getAll(); // Get all products to extract categories
-      console.log('Categories API response:', response);
-      
-      // Handle different response formats
-      let products = [];
-      if (Array.isArray(response.data)) {
-        products = response.data;
-      } else if (Array.isArray(response)) {
-        products = response;
-      } else if (response.data && typeof response.data === 'object') {
-        // Handle object response format - extract array
-        products = Object.values(response.data).filter(item => typeof item === 'object' && item._id);
-      } else {
-        console.warn('Unexpected response format for categories:', response);
-        products = [];
-      }
-      
-      const uniqueCategories = [...new Set(products.map(p => p.category))].filter(Boolean);
-      console.log('Extracted categories:', uniqueCategories);
-      setCategories(uniqueCategories);
-    } catch (error) {
-      console.error('Error loading categories:', error);
-      setCategories([]);
-    }
+    return () => {
+      active = false;
+    };
   }, []);
-
-  useEffect(() => {
-    loadCategories(); // Load categories once
-  }, [loadCategories]);
-
-  useEffect(() => {
-    loadProducts(); // Load products when search/category changes
-  }, [loadProducts]);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);

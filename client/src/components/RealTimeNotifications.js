@@ -3,6 +3,7 @@ import { useWebSocket } from '../context/WebSocketContext';
 import './RealTimeNotifications.css';
 
 const RealTimeNotifications = () => {
+  const realtimeConfigured = process.env.NODE_ENV !== 'production' || Boolean(process.env.REACT_APP_REALTIME_URL);
   const { 
     notifications, 
     markNotificationRead, 
@@ -182,7 +183,9 @@ const RealTimeNotifications = () => {
               <small>
                 {isConnected 
                   ? '🚀 Real-time updates active' 
-                  : '⚠️ Offline - reconnecting...'
+                  : realtimeConfigured
+                    ? '⚠️ Offline - reconnecting...'
+                    : 'ℹ️ Live updates are unavailable on this deployment.'
                 }
               </small>
             </div>
