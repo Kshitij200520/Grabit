@@ -19,18 +19,15 @@ const invalidateProductsCache = () => {
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
+    let guestId = localStorage.getItem('guestId');
+    if (!guestId) {
+      guestId = 'guest_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('guestId', guestId);
+    }
+
+    config.headers['X-Guest-ID'] = guestId;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-      // When user is authenticated, don't send guest ID
-      // This ensures authenticated users get their own cart
-    } else {
-      // Add guest session ID for non-authenticated requests
-      let guestId = localStorage.getItem('guestId');
-      if (!guestId) {
-        guestId = 'guest_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('guestId', guestId);
-      }
-      config.headers['X-Guest-ID'] = guestId;
     }
     
     return config;

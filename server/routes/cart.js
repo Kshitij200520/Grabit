@@ -7,16 +7,20 @@ const authMiddleware = require('../middleware/auth');
 // Guest user session helper
 const getGuestUserId = (req) => {
   // Check for guest ID in header first (from frontend localStorage)
-  if (req.headers['x-guest-id']) {
-    req.session.guestId = req.headers['x-guest-id'];
-    return req.headers['x-guest-id'];
+  const guestId = req.headers['x-guest-id'] || (req.session && req.session.guestId);
+  if (guestId) {
+    if (req.session) {
+      req.session.guestId = guestId;
+    }
+    return guestId;
   }
   
   // Fallback to session-based guest ID
-  if (!req.session.guestId) {
-    req.session.guestId = 'guest_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  const newGuestId = 'guest_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  if (req.session) {
+    req.session.guestId = newGuestId;
   }
-  return req.session.guestId;
+  return newGuestId;
 };
 
 // @desc    Get user cart
